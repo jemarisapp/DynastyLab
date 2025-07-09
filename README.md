@@ -5,8 +5,6 @@ Transform your Dynasty Mode experience with data-driven upgrade decisions, inter
 
 [🚀 Try Live Demo](https://dynastylab.streamlit.app/) • [📊 View Case Study](https://www.jemarisapp.com/projects/dynastylab)
 
-![DynastyLab Screenshot](https://i.ibb.co/XYZ/image-name.png)
-
 ---
 
 ## ✨ Features
