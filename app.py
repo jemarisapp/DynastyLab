@@ -6,8 +6,6 @@ from openai import OpenAI
 import plotly.express as px
 import numpy as np
 
-
-
 with open("theme.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
@@ -518,10 +516,10 @@ Now answer this question with specific numbers, ability descriptions, clear reco
 
 # ───────────── Streamlit App ─────────────
 
-st.set_page_config("DynastyLab AI - AI Assistant & Analytics for CFB Dynasties", layout="wide")
-# st.title("DynastyLab AI")
+st.set_page_config("DynastyLab - AI Assistant & Analytics for CFB Dynasties", layout="wide")
+# st.title("DynastyLab")
 
-st.markdown('<div class="gradient-hero">DynastyLab AI</div>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-hero">DynastyLab</div>', unsafe_allow_html=True)
 
 # ---------- MAIN CHAT UI ----------
 
@@ -685,7 +683,6 @@ if view_mode == "Upgrade Planner":
             cur_idx = TIER_INDEX.get(current, 0)
             upg_idx = TIER_INDEX.get(upgrade, 0)
 
-            st.markdown("<div class='ability-bar-grid'>", unsafe_allow_html=True)
             with bar_cols[i]:
                 st.markdown(f"<p class='ability-header'>{ability}</h3>", unsafe_allow_html=True)
 
