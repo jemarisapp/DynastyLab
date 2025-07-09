@@ -1234,7 +1234,7 @@ elif view_mode == "Upgrade Efficiency Model":
             fig.update_layout(
                 height=800,
                 title={
-                    "text": "Upgrade Efficiency vs SP Cost<br><span style='font-size:14px; color:#e0ff8a;'>Higher scores at lower costs = smarter upgrades</span>",
+                    "text": "Upgrade Efficiency vs SP Cost<br><span style='font-size:14px; color:#e0ff8a;'>Higher scores = better value for SP investment</span>",
                     "x": 0.5,
                     "xanchor": "center",
                     "font": dict(size=18)
@@ -1280,7 +1280,7 @@ elif view_mode == "Upgrade Efficiency Model":
             fig.update_layout(
                 height=800,
                 title={
-                    "text": "Upgrade Efficiency vs Attribute Increase<br><span style='font-size:14px; color:#e0ff8a;'>Compare SP Cost to Attribute Increase</span>",
+                    "text": "Upgrade Efficiency vs Attribute Increase<br><span style='font-size:14px; color:#e0ff8a;'>Higher scores = good value compared to attribute increase</span>",
                     "x": 0.5,
                     "xanchor": "center",
                     "font": dict(size=18)
@@ -1326,7 +1326,7 @@ elif view_mode == "Upgrade Efficiency Model":
             fig.update_layout(
                 height=800,
                 title={
-                    "text": "SP Cost vs Attribute Increase (Raw Value)<br><span style='font-size:14px; color:#e0ff8a;'>Higher attribute increases for lower SP costs = better raw value</span>",
+                    "text": "SP Cost vs Attribute Increase (Raw Value)<br><span style='font-size:14px; color:#e0ff8a;'>Compare the Raw Value of SP Cost to Attribute Increase</span>",
                     "x": 0.5,
                     "xanchor": "center",
                     "font": dict(size=18)
@@ -1345,7 +1345,7 @@ elif view_mode == "Upgrade Efficiency Model":
                     ticklabelstandoff=10
                 ),
                 yaxis=dict(
-                    title="<br>Total Attribute Increase",
+                    title="<br>Attribute Increase",
                     title_font=dict(size=22),
                     showline=True,
                     linewidth=2,
