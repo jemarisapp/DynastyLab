@@ -1,0 +1,514 @@
+/* ===== DYNASTY DARK: EA SPORTS-STYLE STREAMLIT ===== */
+
+/* ============================================================================
+   FONT IMPORTS
+   ============================================================================ */
+   @import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+   
+   /* ============================================================================
+      GLOBAL RESET & BASE STYLES
+      ============================================================================ */
+   * {
+     box-sizing: border-box;
+     font-family: 'Inter', sans-serif;
+     font-weight: 600;
+   }
+   
+   body,
+   .main,
+   [data-testid="stAppViewContainer"] {
+     background: #0d0d0d !important;
+     color: #fff !important;
+     padding: 0 !important;
+     margin: 0 !important;
+   }
+   
+   .block-container {
+     background: transparent !important;
+     color: #f8f8f8 !important;
+     max-width: 1600px !important;
+     margin: 0 auto !important;
+     padding: 2rem 3rem !important; /* top/bottom: 2rem, left/right: 3rem */
+   }
+   
+   /* ============================================================================
+      TYPOGRAPHY
+      ============================================================================ */
+   h1, h2, h3, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+     font-family: 'Russo One', sans-serif;
+     font-weight: 700;
+     letter-spacing: 1.5px;
+     text-transform: uppercase;
+     color: #f8f8f8;
+     border-bottom: 0px solid #bdff00;
+     padding-bottom: 0rem;
+     margin-bottom: 1rem;
+   }
+   
+   body, .stMarkdown {
+     font-size: 1rem !important; 
+     font-family: 'Inter', sans-serif;
+     font-weight: 600;
+   }
+   
+   p {
+     font-size: 1rem !important;
+     font-weight: 600;
+     line-height: 1.6 !important;
+     margin-bottom: 1.25rem;
+     color: #f8f8f8;
+   }
+   
+   /* ============================================================================
+      GRADIENT TEXT STYLES
+      ============================================================================ */
+   .gradient-text {
+     background: linear-gradient(to right, #dbff78, #ffffff); /* Gold to lime green */
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;
+     text-fill-color: transparent;
+     font-weight: 700;
+     font-family: 'Russo One', sans-serif;
+     letter-spacing: 1.5px;
+     font-size: 1.8rem;
+     text-transform: uppercase;
+   }
+   
+   .gradient-text-medium {
+     background: linear-gradient(to right, #dbff78, #ffffff); /* Gold to lime green */
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;
+     text-fill-color: transparent;
+     font-weight: 700;
+     font-family: 'Russo One', sans-serif;
+     letter-spacing: 1.5px;
+     font-size: 2.4rem;
+     text-transform: uppercase;
+   }
+   
+   .gradient-hero {
+     background: linear-gradient(to right, #bdff00, #ffffff); /* Gold to green */
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;
+     text-fill-color: transparent;
+     font-family: 'Russo One', sans-serif;
+     font-size: 5rem;
+     font-weight: 800;
+     text-transform: none;
+     letter-spacing: 0.5px;
+     margin-bottom: 1rem;
+     letter-spacing: 1.5px;
+   }
+   
+   .stat-number {
+     color: #bdff00; /* Bright lime green */
+     font-weight: 700;
+   }
+   
+   /* ============================================================================
+      FORM BUTTONS
+      ============================================================================ */
+   /* Primary button styles */
+   div[data-testid="stForm"] button[kind="formSubmit"],
+   div[data-testid="stForm"] button,
+   .stFormSubmitButton > button,
+   .stFormSubmitButton button {
+     font-family: 'Russo One', sans-serif !important;
+     background-color: #bdff00 !important;
+     color: #0d0d0d !important;
+     font-weight: 700 !important;
+     font-size: 0.95rem !important;
+     padding: 0.6rem 1.5rem !important;
+     border-radius: 8px !important;
+     border: none !important;
+     box-shadow: 0 0 0px #bdff00 !important; /* Green glow */
+     text-transform: none !important;
+     transition: all 0.2s ease !important;
+     cursor: pointer !important;
+   }
+   
+   /* Hover state */
+   div[data-testid="stForm"] button[kind="formSubmit"]:hover,
+   div[data-testid="stForm"] button:hover,
+   .stFormSubmitButton > button:hover,
+   .stFormSubmitButton button:hover {
+     background-color: #333 !important;
+     color: #000000 !important;
+     box-shadow: 0 0 0px #333 !important; /* Stronger glow on hover */
+     transform: translateY(-1px) !important; /* Slight lift effect */
+   }
+   
+   /* Active/pressed state */
+   div[data-testid="stForm"] button[kind="formSubmit"]:active,
+   div[data-testid="stForm"] button:active,
+   .stFormSubmitButton > button:active,
+   .stFormSubmitButton button:active {
+     transform: scale(0.97) !important;
+     background-color: #bdff00 !important;
+     color: #000000 !important;
+     box-shadow: 0 0 5px rgba(0, 179, 0, 0.0) !important; /* Reduced glow when pressed */
+   }
+   
+   /* Focus state (for accessibility) */
+   div[data-testid="stForm"] button[kind="formSubmit"]:focus,
+   div[data-testid="stForm"] button:focus,
+   .stFormSubmitButton > button:focus,
+   .stFormSubmitButton button:focus {
+     outline: 2px solid #bdff00 !important;
+     outline-offset: 2px !important;
+   }
+   
+   /* Button text styles */
+   div[data-testid="stForm"] button[kind="formSubmit"] p,
+   div[data-testid="stForm"] button p,
+   .stFormSubmitButton > button p,
+   .stFormSubmitButton button p {
+     color: #000 !important;
+     margin: 0 !important;
+     transition: color 0.2s ease !important;
+   }
+   
+   /* Button text hover styles */
+   div[data-testid="stForm"] button:hover[kind="formSubmit"] p,
+   div[data-testid="stForm"] button:hover p,
+   .stFormSubmitButton > button:hover p,
+   .stFormSubmitButton button:hover p {
+     color: #bdff00 !important;
+     margin: 0 !important;
+     transition: color 0.2s ease !important;
+   }
+   
+   /* Ensure all text elements inside inherit the color */
+   div[data-testid="stForm"] button *,
+   .stFormSubmitButton button * {
+     color: inherit !important;
+   }
+   
+   /* ============================================================================
+      FORM INPUTS
+      ============================================================================ */
+   input, select, textarea {
+     background-color: #333 !important;
+     color: #f8f8f8 !important;
+     border: 1px solid #444 !important;
+     border-radius: 8px;
+     padding: 0.5rem 1rem;
+   }
+   
+   /* Number input specific styles */
+   input[type="number"] {
+     background-color: #0d0d0d !important;
+     font-weight: 600 !important;
+     color: #f8f8f8 !important;
+     border: 2px solid #333 !important;
+     border-radius: 8px;
+     padding: 0.5rem 1rem;
+   }
+   
+   input[type="number"]::-webkit-inner-spin-button {
+     filter: invert(100%) hue-rotate(180deg);
+   }
+   
+   label[for*="Player SP"] {
+     color: #bdff00 !important;
+     font-weight: bold;
+     text-transform: uppercase;
+   }
+   
+   /* ============================================================================
+      DROPDOWN SELECTS
+      ============================================================================ */
+   /* Wrapper */
+   div[data-baseweb="select"] {
+     background: linear-gradient(#0d0d0d, #0d0d0d) padding-box, /* inner fill */
+                 linear-gradient(0deg, #0d0d0d, #444) border-box; /* border gradient */
+     border: 2px solid transparent;
+     border-radius: 8px;
+     color: #f8f8f8 !important;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+   }
+   
+   /* Default fallback — overridden dynamically by st.markdown inline */
+   div[data-baseweb="select"] > div:first-child {
+     background-color: inherit !important;
+     color: inherit !important;
+     border: none !important;
+     box-shadow: none !important;
+   }
+   
+   /* Text inside input */
+   div[data-baseweb="select"] input {
+     background-color: transparent !important;
+     color: #f8f8f8 !important;
+     border: none !important;
+     box-shadow: none !important;
+   }
+   
+   /* Chevron */
+   div[data-baseweb="select"] svg {
+     fill: #e0ff8a !important;
+   }
+   
+   /* Focus glow */
+   div[data-baseweb="select"]:focus-within {
+     box-shadow: 0 0 6px 2px #bdff00 !important;
+   }
+   
+   /* Force visible span text */
+   div[data-baseweb="select"] span {
+     color: #f8f8f8 !important;
+   }
+   
+   /* Hover State: white fill with red → green border gradient */
+   div[data-baseweb="select"]:hover {
+     background: linear-gradient(#202020, #202020) padding-box, /* inner fill */
+                 linear-gradient(0deg, #202020, #444) border-box; /* border gradient */
+     border: 2px solid transparent;
+     color: #f8f8f8 !important;
+   }
+   
+   /* Ensure inner text/input also adapts */
+   div[data-baseweb="select"]:hover input,
+   div[data-baseweb="select"]:hover span {
+     color: #f8f8f8 !important;
+   }
+   
+   /* ============================================================================
+      DROPDOWN OPTIONS MENU (POPOVER)
+      ============================================================================ */
+   /* Popover container */
+   div[data-baseweb="popover"] {
+     background-color: #000000 !important;
+     color: #f8f8f8 !important;
+     border: 1px solid #bdff00 !important;
+     border-radius: 8px !important;
+     overflow: hidden !important;
+     z-index: 9999 !important;
+   }
+   
+   /* Default option */
+   div[data-baseweb="option"] > div {
+     background-color: #1c1c1c !important;
+     color: #f8f8f8 !important;
+     font-weight: 500 !important;
+     padding: 0.5rem 1rem !important;
+     transition: background 0.2s ease;
+   }
+   
+   /* Hovered option */
+   div[data-baseweb="option"]:hover > div {
+     background-color: #FFD700 !important;
+     color: #000000 !important;
+     font-weight: 700 !important;
+   }
+   
+   /* ============================================================================
+      SLIDERS
+      ============================================================================ */
+   input[type="range"] {
+     accent-color: #bdff00 !important; /* fallback */
+   }
+   
+   /* For WebKit browsers */
+   input[type="range"]::-webkit-slider-runnable-track {
+     height: 6px;
+     background: linear-gradient(to right, #bdff00 0%, #555 100%) !important;
+     border-radius: 4px;
+   }
+   
+   input[type="range"]::-webkit-slider-thumb {
+     background-color: #bdff00 !important;
+     border: 2px solid #000;
+     border-radius: 50%;
+     width: 18px;
+     height: 18px;
+     margin-top: -6px;
+     cursor: pointer;
+     box-shadow: 0 0 10px #bdff00;
+   }
+   
+   /* For Firefox */
+   input[type="range"]::-moz-range-track {
+     height: 6px;
+     background: linear-gradient(to right, #bdff00 0%, #555 100%) !important;
+     border-radius: 4px;
+   }
+   
+   input[type="range"]::-moz-range-thumb {
+     background-color: #bdff00 !important;
+     border: 2px solid #000;
+     border-radius: 50%;
+     width: 18px;
+     height: 18px;
+     box-shadow: 0 0 10px #bdff00;
+   }
+   
+   .stSlider > label {
+     text-align: center !important;
+     display: block !important;
+   }
+   
+   /* ============================================================================
+      SIDEBAR
+      ============================================================================ */
+   [data-testid="stSidebar"] {
+     background-color: #0e0e0e !important;
+     border-right: 2px solid #2b2b2b;
+   }
+   
+   /* ============================================================================
+      BADGES & LABELS
+      ============================================================================ */
+   .badge {
+     padding: 0.25rem 0.5rem;
+     font-size: 0.85rem;
+     font-weight: bold;
+     border-radius: 4px;
+     display: inline-block;
+     animation: pulseGlow 2s infinite;
+   }
+   
+   @keyframes pulseGlow {
+     0% { box-shadow: 0 0 0 rgba(242, 169, 0, 0); }
+     50% { box-shadow: 0 0 8px rgba(242, 169, 0, 0.6); }
+     100% { box-shadow: 0 0 0 rgba(242, 169, 0, 0); }
+   }
+   
+   .badge-green { background: #00b300; color: white; }
+   .badge-yellow { background: #e6b800; color: #1c1c1c; }
+   .badge-red { background: #cc0000; color: white; }
+   
+   .russo-label {
+     font-family: 'Russo One', sans-serif;
+     font-size: 1.5rem;
+     font-weight: 700;
+     letter-spacing: 1px;
+     color: #f8f8f8; /* Text color */
+     padding: 0.4rem 1rem;
+     text-align: center;
+     display: inline-block;
+   }
+   
+   /* ============================================================================
+      ABILITY SECTIONS
+      ============================================================================ */
+   .ability-header {
+     text-align: center !important;
+     margin: 0 auto 0.5rem auto !important;
+   }
+   
+   .ability-column-header {
+     font-family: 'Russo One', sans-serif;
+     font-size: 1.1rem;
+     font-weight: 700;
+     letter-spacing: 1.5px;
+     text-transform: uppercase;
+     color: #f8f8f8;
+     padding-bottom: 0.5rem;
+     margin-bottom: 1rem;
+     border-bottom: 2px solid #bdff00;
+   }
+   
+   .totalsp-header {
+     font-family: 'Russo One', sans-serif;
+     font-size: 1.1rem;
+     font-weight: 700;
+     letter-spacing: 1.5px;
+     text-transform: uppercase;
+     color: #f8f8f8;
+     padding-top: 0.5rem;
+     margin-top: 0rem;
+   }
+   
+   /* ============================================================================
+      CHAT RESPONSE STYLES
+      ============================================================================ */
+   .chat-response h3 {
+     margin-top: 2rem;
+     margin-bottom: 0.5rem;
+     font-size: 1.2rem;
+     font-weight: 700;
+     color: #bdff00;
+   }
+   
+   .chat-response ul {
+     margin-bottom: 1.5rem;
+     line-height: 1.6;
+     padding-left: 1.5rem;
+   }
+   
+   .chat-response li {
+     margin-bottom: 0.5rem;
+   }
+   
+   .chat-response p {
+     margin: 1rem 0;
+   }
+   
+   /* ============================================================================
+      UTILITY CLASSES
+      ============================================================================ */
+    .dropdown-highlight {
+      color: #bdff00 !important;
+      font-weight: bold;
+    }
+    ul {
+      padding-left: 1.25rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+   
+   .torn-divider {
+     height: 22px;
+     background: url('https://i.imgur.com/1RuJYRp.png') repeat-x center;
+     background-size: cover;
+     margin: 2rem 0;
+   }
+   
+   /* ============================================================================
+      FONT FAMILY HELPERS
+      ============================================================================ */
+   .smooch-sans-<uniquifier> {
+     font-family: "Smooch Sans", sans-serif;
+     font-optical-sizing: auto;
+     font-weight: <weight>;
+     font-style: normal;
+   }
+   
+   .russo-one-regular {
+     font-family: "Russo One", sans-serif;
+     font-weight: 400;
+     font-style: normal;
+   }
+   
+   /* ============================================================================
+      MISC OVERRIDES
+      ============================================================================ */
+   [data-baseweb="tag"] {
+     background-color: #111 !important;
+     color: #111 !important;
+     font-weight: 500;
+   }
+   
+   [data-testid="stHorizontalBlock"],
+   .stMarkdown {
+     box-shadow: none !important;
+     background: none !important;
+   }
+   
+   tr:hover {
+     background-color: rgba(242, 169, 0, 0.15) !important;
+     cursor: pointer;
+     transition: background-color 0.2s ease;
+   }
+
+    /* Smooth fade effect on section change */
+    [data-testid="stVerticalBlock"] > div {
+      transition: opacity 0.3s ease-in-out;
+    }
+
