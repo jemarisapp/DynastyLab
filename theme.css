@@ -457,12 +457,7 @@
       color: #bdff00 !important;
       font-weight: bold;
     }
-    ul {
-      padding-left: 1.25rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-   
+
    .torn-divider {
      height: 22px;
      background: url('https://i.imgur.com/1RuJYRp.png') repeat-x center;
