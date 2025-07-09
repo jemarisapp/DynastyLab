@@ -41,13 +41,13 @@ A natural language assistant powered by GPT-4o that:
 - Cites efficiency scores and upgrade value rankings using your own logic
 
 Upgrade Planner
-1. Select your player's details: Player SP, Position, Archetype
+1. Select your player's details: player skill points, position, archetype
 2. Choose your current and target tiers to see upgrade costs
 3. Use visualizations to easily see your player's loadout  
 4. Reference the SP Summary to confirm your budget isn't surpassed
    
 Upgrade Efficiency Model
-1. Select your filters: Positions, Archetypes, Abilities, Tier Transitions
+1. Select your filters: positions, archetypes, abilities, tier transitions
 2. Choose your optimization preference using the weight slider  
 3. Explore upgrade efficiency scores through interactive visualizations
 
