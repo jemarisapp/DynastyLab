@@ -5,6 +5,7 @@ import openai
 from openai import OpenAI
 import plotly.express as px
 import numpy as np
+import plotly.graph_objects as go
 
 with open("theme.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -604,7 +605,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 view_mode = st.radio(
     "Select Tool",
-    ["Upgrade Planner", "Upgrade Efficiency Model"],
+    ["Upgrade Planner", "Upgrade Efficiency Model", "Tier Progression Visualization"],
     horizontal=True
 )
 
@@ -1364,3 +1365,283 @@ elif view_mode == "Upgrade Efficiency Model":
             )
             
             st.plotly_chart(fig, use_container_width=False, height=800)
+            
+            
+# ───────────── Upgrade Efficiency Model ─────────────
+
+elif view_mode == "Tier Progression Visualization":
+    st.markdown("""
+    <div style="
+        background: linear-gradient(to right, #222, #0d0d0d);
+        border-left: 5px solid #bdff00;
+        padding: 1rem 1.25rem;
+        border-radius: 8px;
+        font-weight: 600;
+        color: #f8f8f8;
+        margin-bottom: 1rem;
+    ">
+    Visualize how attribute requirements increase across tiers for each ability upgrade path.
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("### Tier Progression Visualization")
+    
+    with st.expander("How Tier Progression Works - Understanding attribute curves"):
+        st.markdown("""
+        <span class="dropdown-highlight">Tier Progression </span>shows how attribute requirements scale from Bronze to Platinum.
+        This helps you understand which abilities have steep difficulty curves and plan your upgrade path accordingly.
+        """, unsafe_allow_html=True)
+        
+        st.markdown('<div class="gradient-text">What You Will See</div>', unsafe_allow_html=True)
+        st.markdown("""
+        <ul>
+        <li><span class="dropdown-highlight">Smooth curves:</span> Abilities with consistent attribute increases</li>
+        <li><span class="dropdown-highlight">Steep jumps:</span> Abilities that become much harder at higher tiers</li>
+        <li><span class="dropdown-highlight">Multiple lines:</span> Abilities like Shifty that require two different attributes</li>
+        </ul>
+        """, unsafe_allow_html=True)
+        
+        st.markdown('<div class="gradient-text">Use Cases</div>', unsafe_allow_html=True)
+        st.markdown("""
+        - **Compare difficulty curves** between similar abilities
+        - **Identify plateau points** where upgrades become expensive
+        - **Plan your build** by understanding which abilities scale smoothly vs. dramatically
+        - **Multi-attribute abilities** show both stat requirements on the same chart
+        """)
+
+    # Filter controls
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        pos_filter = st.multiselect("Filter by Position", sorted(df["position"].unique()))
+    
+    with col2:
+        available_archs = (
+            df[df["position"].isin(pos_filter)]["archetype"].unique().tolist()
+            if pos_filter
+            else df["archetype"].unique().tolist()
+        )
+        arch_filter = st.multiselect("Filter by Archetype", sorted(available_archs))
+    
+    with col3:
+        available_abilities = (
+            df[df["archetype"].isin(arch_filter)]["ability"].unique().tolist()
+            if arch_filter
+            else df["ability"].unique().tolist()
+        )
+        ability_filter = st.multiselect("Filter by Ability", sorted(available_abilities))
+
+    # Process data for tier progression
+    prog_df = df.copy()
+    if pos_filter:
+        prog_df = prog_df[prog_df["position"].isin(pos_filter)]
+    if arch_filter:
+        prog_df = prog_df[prog_df["archetype"].isin(arch_filter)]
+    if ability_filter:
+        prog_df = prog_df[prog_df["ability"].isin(ability_filter)]
+
+    if prog_df.empty:
+        st.warning("No matching data found for the selected filters.")
+    else:
+        # Create the tier progression chart
+        fig = go.Figure()
+        
+        # Define tier order and colors
+        tier_order = ["Bronze", "Silver", "Gold", "Platinum"]
+        tier_colors = {
+            "Bronze": "#CD7F32",
+            "Silver": "#C0C0C0", 
+            "Gold": "#FFD700",
+            "Platinum": "#E5E4E2"
+        }
+        
+        # Custom color palette for abilities
+        custom_palette = (
+            px.colors.qualitative.Alphabet +
+            px.colors.qualitative.Dark24 +
+            px.colors.qualitative.Light24
+        )
+        
+        # Process each ability
+        ability_color_map = {}
+        color_index = 0
+        
+        # Add jitter control
+        st.markdown("<br>", unsafe_allow_html=True)
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            jitter_amount = st.slider(
+                "Vertical Jitter (helps separate overlapping lines)",
+                min_value=0.0,
+                max_value=3.0,
+                value=1.0,
+                step=0.1,
+                help="Add slight vertical offset to prevent lines from stacking on top of each other"
+            )
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        for (pos, arch, ability), group in prog_df.groupby(["position", "archetype", "ability"]):
+            # Sort by tier
+            group = group.sort_values("tier", key=lambda x: [tier_order.index(t) for t in x])
+            
+            # Create base ability identifier
+            ability_id = f"{arch} · {ability}"
+            
+            # Process stat 1 if it exists
+            if group["stat_1_name"].notna().any():
+                stat_1_name = group["stat_1_name"].iloc[0]
+                stat_1_values = []
+                tier_labels = []
+                
+                for tier in tier_order:
+                    tier_data = group[group["tier"] == tier]
+                    if not tier_data.empty and pd.notna(tier_data["stat_1_value"].iloc[0]):
+                        stat_1_values.append(tier_data["stat_1_value"].iloc[0])
+                        tier_labels.append(tier)
+                
+                if len(stat_1_values) > 1:  # Only plot if we have multiple points
+                    if ability_id not in ability_color_map:
+                        ability_color_map[ability_id] = custom_palette[color_index % len(custom_palette)]
+                        color_index += 1
+                    
+                    # Apply jitter to y-values
+                    jitter_offset = np.random.uniform(-jitter_amount, jitter_amount)
+                    jittered_values = [val + jitter_offset for val in stat_1_values]
+                    
+                    fig.add_trace(go.Scatter(
+                        x=tier_labels,
+                        y=jittered_values,
+                        mode='lines+markers',
+                        name=f"{ability_id} ({stat_1_name})",
+                        line=dict(color=ability_color_map[ability_id], width=3),
+                        marker=dict(size=8, color=ability_color_map[ability_id]),
+                        hovertemplate=(
+                            f"<b>{ability_id}</b><br>"
+                            f"Stat: {stat_1_name}<br>"
+                            "Tier: %{x}<br>"
+                            "Value: %{y:.0f}<br>" 
+                            f"Position: {pos}<extra></extra>"
+                        )
+                    ))
+            
+            # Process stat 2 if it exists (for multi-attribute abilities)
+            if group["stat_2_name"].notna().any():
+                stat_2_name = group["stat_2_name"].iloc[0]
+                stat_2_values = []
+                tier_labels = []
+                
+                for tier in tier_order:
+                    tier_data = group[group["tier"] == tier]
+                    if not tier_data.empty and pd.notna(tier_data["stat_2_value"].iloc[0]):
+                        stat_2_values.append(tier_data["stat_2_value"].iloc[0])
+                        tier_labels.append(tier)
+                
+                if len(stat_2_values) > 1:  # Only plot if we have multiple points
+                    if ability_id not in ability_color_map:
+                        ability_color_map[ability_id] = custom_palette[color_index % len(custom_palette)]
+                        color_index += 1
+                    
+                    # Use dashed line for second stat
+                    fig.add_trace(go.Scatter(
+                        x=tier_labels,
+                        y=stat_2_values,
+                        mode='lines+markers',
+                        name=f"{ability_id} ({stat_2_name})",
+                        line=dict(color=ability_color_map[ability_id], width=3, dash='dash'),
+                        marker=dict(size=8, color=ability_color_map[ability_id], symbol='diamond'),
+                        hovertemplate=(
+                            f"<b>{ability_id}</b><br>"
+                            f"Stat: {stat_2_name}<br>"
+                            "Tier: %{x}<br>"
+                            "Value: %{y}<br>"
+                            f"Position: {pos}<extra></extra>"
+                        )
+                    ))
+        
+        # Update layout
+        fig.update_layout(
+            height=700,
+            title={
+                "text": "Tier Progression: Attribute Requirements by Tier<br><span style='font-size:14px; color:#e0ff8a;'>Solid lines = Primary stat · Dashed lines = Secondary stat</span>",
+                "x": 0.5,
+                "xanchor": "center",
+                "font": dict(size=18, color="white")
+            },
+            plot_bgcolor="#111",
+            paper_bgcolor="rgba(0, 0, 0, 0.0)",
+            margin=dict(t=120),
+            xaxis=dict(
+                title="<br>Tier",
+                title_font=dict(size=20, color="white"),
+                showline=True,
+                linewidth=2,
+                linecolor='white',
+                mirror=True,
+                tickfont=dict(size=14, color="white"),
+                categoryorder="array",
+                categoryarray=tier_order
+            ),
+            yaxis=dict(
+                title="<br>Attribute Value",
+                title_font=dict(size=20, color="white"),
+                showline=True,
+                linewidth=2,
+                linecolor='white',
+                mirror=True,
+                tickfont=dict(size=14, color="white")
+            ),
+            legend=dict(
+                font=dict(
+                    family="Inter, sans-serif",
+                    size=12,
+                    color="#f8f8f8"
+                ),
+                bgcolor="rgba(0,0,0,0.7)",
+                bordercolor="white",
+                borderwidth=1
+            ),
+            font=dict(color="white")
+        )
+        
+        st.plotly_chart(fig, use_container_width=True, height=700)
+        
+        # Add summary statistics
+        if not prog_df.empty:
+            st.markdown("### Progression Summary")
+            
+            # Calculate some interesting stats
+            summary_data = []
+            for (pos, arch, ability), group in prog_df.groupby(["position", "archetype", "ability"]):
+                group = group.sort_values("tier", key=lambda x: [tier_order.index(t) for t in x])
+                
+                # Calculate attribute increases
+                if len(group) > 1:
+                    first_tier = group.iloc[0]
+                    last_tier = group.iloc[-1]
+                    
+                    stat_1_increase = 0
+                    stat_2_increase = 0
+                    
+                    if pd.notna(first_tier["stat_1_value"]) and pd.notna(last_tier["stat_1_value"]):
+                        stat_1_increase = last_tier["stat_1_value"] - first_tier["stat_1_value"]
+                    
+                    if pd.notna(first_tier["stat_2_value"]) and pd.notna(last_tier["stat_2_value"]):
+                        stat_2_increase = last_tier["stat_2_value"] - first_tier["stat_2_value"]
+                    
+                    total_increase = stat_1_increase + stat_2_increase
+                    
+                    summary_data.append({
+                        "Position": pos,
+                        "Archetype": arch,
+                        "Ability": ability,
+                        "Tier Range": f"{first_tier['tier']} → {last_tier['tier']}",
+                        "Total Attribute Increase": total_increase,
+                        "Primary Stat": f"{first_tier['stat_1_name']}: +{stat_1_increase}" if stat_1_increase > 0 else "",
+                        "Secondary Stat": f"{first_tier['stat_2_name']}: +{stat_2_increase}" if stat_2_increase > 0 else ""
+                    })
+            
+            if summary_data:
+                summary_df = pd.DataFrame(summary_data)
+                summary_df = summary_df.sort_values("Total Attribute Increase", ascending=False)
+                st.dataframe(summary_df, use_container_width=True)
