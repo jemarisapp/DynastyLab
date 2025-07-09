@@ -563,7 +563,7 @@ with st.expander("Explore Features & Get Started"):
     """, unsafe_allow_html=True)
 
 
-EXAMPLE_QUESTION = "What's the most efficient way to spend 25 SP on a Pocket Passer?"
+EXAMPLE_QUESTION = "Which archetypes get Shifty?"
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
