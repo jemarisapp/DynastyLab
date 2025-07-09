@@ -33,11 +33,23 @@ Transform your Dynasty Mode experience with data-driven upgrade decisions, inter
 
 ## How It Works
 
-1. Select your player details (position, archetype, current SP)  
+AI Assistant
+A natural language assistant powered by GPT-4o that:
+- Converts user questions into targeted upgrade recommendations
+- Interprets and filters SQL data under the hood
+- Returns specific SP costs, tier logic, and attribute requirements
+- Cites efficiency scores and upgrade value rankings using your own logic
+
+Upgrade Planner
+1. Select your player's details: Player SP, Position, Archetype
+2. Choose your current and target tiers to see upgrade costs
+3. Use visualizations to easily see your player's loadout  
+4. Reference the SP Summary to confirm your budget isn't surpassed
+   
+Upgrade Efficiency Model
+1. Select your filters: Positions, Archetypes, Abilities, Tier Transitions
 2. Choose your optimization preference using the weight slider  
-3. Explore upgrade options through interactive visualizations  
-4. Ask the AI assistant for strategic recommendations  
-5. Plan your upgrade path with the visual progression tool  
+3. Explore upgrade efficiency scores through interactive visualizations
 
 ---
 
