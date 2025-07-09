@@ -1243,7 +1243,7 @@ elif view_mode == "Upgrade Efficiency Model":
                 paper_bgcolor="rgba(0, 0, 0, 0.0)",
                 margin=dict(t=120),
                 xaxis=dict(
-                    title="<br>SP Cost",
+                    title="<br> Total SP Cost",
                     title_font=dict(size=22),
                     showline=True,
                     linewidth=2,
