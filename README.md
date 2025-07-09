@@ -1,37 +1,37 @@
-# 🧠 DynastyLab 🏈  
+# DynastyLab
 **AI-powered upgrade optimization for EA SPORTS College Football Dynasty Mode**
 
 Transform your Dynasty Mode experience with data-driven upgrade decisions, interactive visualizations, and intelligent recommendations.
 
-[🚀 Try Live Demo](https://dynastylab.streamlit.app/) • [📊 View Case Study](https://www.jemarisapp.com/projects/dynastylab)
+[Try Live Demo](https://dynastylab.streamlit.app/) • [View Case Study](https://www.jemarisapp.com/projects/dynastylab)
 
 ---
 
-## ✨ Features
+## Features
 
-### 🤖 AI Assistant
+### AI Assistant
 - Ask natural language questions about upgrade strategies  
 - Get personalized recommendations based on your archetype and playstyle  
 - Powered by GPT-4o for contextual, strategic advice  
 
-### 📈 Efficiency Scoring Model
+### Efficiency Scoring Model
 - Dynamic algorithm that weighs SP cost vs. attribute gain  
 - Adjustable weighting system for personalized optimization  
 - Identifies the most efficient upgrade paths across all tiers  
 
-### 🎯 Interactive Upgrade Planner
+### Interactive Upgrade Planner
 - Visual tier progression with real-time SP calculations  
 - Color-coded ability grids showing upgrade status  
 - Simulate upgrade sequences before spending points  
 
-### 📊 Multi-View Analytics
+### Multi-View Analytics
 - **Efficiency vs SP Cost:** Find the best value upgrades  
 - **Efficiency vs Attribute Gain:** Optimize for maximum stat improvement  
 - **Cost vs Gain Analysis:** Raw comparison without scoring influence  
 
 ---
 
-## 🎮 How It Works
+## How It Works
 
 1. Select your player details (position, archetype, current SP)  
 2. Choose your optimization preference using the weight slider  
@@ -41,7 +41,7 @@ Transform your Dynasty Mode experience with data-driven upgrade decisions, inter
 
 ---
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 - **Frontend:** VSCode, Python, Streamlit  
 - **Data Processing:** Pandas, NumPy  
@@ -52,7 +52,7 @@ Transform your Dynasty Mode experience with data-driven upgrade decisions, inter
 
 ---
 
-## 📊 Key Insights
+## Key Insights
 
 The tool reveals several strategic insights:
 
@@ -63,7 +63,7 @@ The tool reveals several strategic insights:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```bash
 dynastylab-ai/
@@ -79,7 +79,7 @@ dynastylab-ai/
 
 ---
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 DynastyLab AI bridges the gap between serious data analysis and engaging user experience:
 
@@ -90,7 +90,7 @@ DynastyLab AI bridges the gap between serious data analysis and engaging user ex
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Efficiency Model Parameters
 
@@ -113,14 +113,14 @@ efficiency_score = 100 - (
 
 ---
 
-## 📞 Contact
+## Contact
 
 **Your Name** – your.email@example.com  
 
 [GitHub Project Link](https://github.com/yourusername/dynastylab-ai)
 
 <details>
-<summary>🔧 Developer Setup (Optional)</summary>
+<summary>Developer Setup (Optional)</summary>
 
 ### Prerequisites
 - Python 3.8+
