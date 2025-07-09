@@ -9,15 +9,11 @@ import numpy as np
 with open("theme.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-
-# Initialize the OpenAI client securely
 client = OpenAI(api_key=st.secrets["openai_api_key"])
 
-# --- CONFIGURATION ---
 DB_PATH = "bot_data_archetypes.db"
 MODEL = "gpt-4"
 
-# --- Connect to DB ---
 def execute_query(sql):
     try:
         conn = sqlite3.connect(DB_PATH)
@@ -30,8 +26,6 @@ def execute_query(sql):
     except Exception as e:
         return [], [[f"Error: {e}"]]
 
-
-# Tier setup
 TIER_COLORS = {
     "Bronze": "#8B5A2B",
     "Silver": "#C0C0C0",
@@ -83,7 +77,7 @@ def blend_color(percent):
 
 
 
-# ---------- NATURAL LANGUAGE TO SQL ASSISTANT ----------
+# ───────────── AI Assistant ─────────────
 
 df = load_data()
 
@@ -165,11 +159,11 @@ Relationships:
 - ability_descriptions.ability_id → abilities.id
 """
 
-# Query the database for relevant data AND calculate efficiency scores
+# Query the database for relevant data and calculate efficiency scores
     try:
         conn = sqlite3.connect(DB_PATH)
         
-        # Get all the data the assistant might need
+        # Gather data
         query = """
         SELECT
             p.name AS position,
@@ -416,7 +410,6 @@ Relationships:
     except Exception as e:
         data_summary = f"Error retrieving data: {e}"
 
-    # ENHANCED PROMPT WITH EFFICIENCY INTEGRATION AND DESCRIPTIONS
     prompt = f"""You are an expert college football upgrade strategist built into a EA Sports College Football 26 upgrade planner.
 
 You have access to a complete database of player upgrade paths, efficiency scores, AND detailed ability descriptions that help identify the best value upgrades and explain what each ability does.
@@ -445,7 +438,7 @@ IMPORTANT DISTINCTION:
 ABILITY DESCRIPTIONS USAGE:
 - When explaining what an ability does, use the descriptions from the database
 - When discussing a tier's requirements, explain that the listed attributes are REQUIRED to unlock it
-- Example: "Silver Shifty requires 92 ACC and 90 COD — it does not boost those stats."
+- Example: "Silver Shifty requires 92 ACC and 90 COD - it does not boost those stats."
 - If someone asks "what does [ability] do?", provide the descriptions for all available tiers
 
 EFFICIENCY SCORE GUIDANCE:
@@ -494,8 +487,8 @@ TONE & STYLE:
 - Reference ability descriptions naturally in recommendations
 
 EXAMPLE QUALITY RESPONSES:
-❌ Bad: "Silver upgrades cost varying amounts"
-✅ Good: "For Pocket Passers, Silver Quick Release costs 8 SP and gives you 'Moderately improved ability to quickly release the ball', while Silver Pocket Presence costs 10 SP for 'Enhanced awareness and composure in the pocket'.For detailed efficiency comparisons of all upgrade paths, check the Upgrade Efficiency Model."
+Bad: "Silver upgrades cost varying amounts"
+Good: "For Pocket Passers, Silver Quick Release costs 8 SP and gives you 'Moderately improved ability to quickly release the ball', while Silver Pocket Presence costs 10 SP for 'Enhanced awareness and composure in the pocket'.For detailed efficiency comparisons of all upgrade paths, check the Upgrade Efficiency Model."
 
 Now answer this question with specific numbers, ability descriptions, clear recommendations, and strategic reasoning:
 
@@ -510,7 +503,7 @@ Now answer this question with specific numbers, ability descriptions, clear reco
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
-        return f"⚠️ Assistant failed to answer: {e}"
+        return f"Assistant failed to answer: {e}"
 
 
 
@@ -521,7 +514,7 @@ st.set_page_config("DynastyLab - AI Assistant & Analytics for CFB Dynasties", la
 
 st.markdown('<div class="gradient-hero">DynastyLab</div>', unsafe_allow_html=True)
 
-# ---------- MAIN CHAT UI ----------
+# ───────────── UI ─────────────
 
 st.markdown("""
 
@@ -569,7 +562,7 @@ if "chat_history" not in st.session_state:
 
 with st.expander("Build Smarter. Ask the AI.", expanded=True):
 
-    # Create a form to prevent reloads
+    # Form to prevent reloads
     with st.form(key='assistant_form'):
         user_input = st.text_input(
             "Ask anything about archetypes, abilities, or upgrade strategies.",
@@ -600,7 +593,7 @@ with st.expander("Build Smarter. Ask the AI.", expanded=True):
 
 
 
-    # Add a clear chat button
+    # Clear chat button
     if st.session_state.chat_history:
         if st.button("Clear Chat History"):
             st.session_state.chat_history = []
@@ -614,6 +607,8 @@ view_mode = st.radio(
     ["Upgrade Planner", "Upgrade Efficiency Model"],
     horizontal=True
 )
+
+# ───────────── Upgrade Planner ─────────────
 
 if view_mode == "Upgrade Planner":
     st.markdown("""
@@ -633,10 +628,10 @@ if view_mode == "Upgrade Planner":
     st.markdown("<br>", unsafe_allow_html=True)
 
     
-    # ───────────── COLUMN 1: Tier Bars ─────────────
-    col1, col2, col3 = st.columns([5, 3, 1.5])  # ~57%, 34%, 9%
 
-    # ───────────── COLUMN 1: Main Planner ─────────────
+    col1, col2, col3 = st.columns([5, 3, 1.5])
+
+    # ───────────── COLUMN 1: Dropdowns and Bars ─────────────
     with col1:
         st.markdown("### Upgrade Planner")
 
@@ -650,11 +645,8 @@ if view_mode == "Upgrade Planner":
 
         st.markdown("### Abilities")
         
-
-
         filtered_df = df[(df["position"] == position) & (df["archetype"] == archetype)]
 
-        # Build ability dict
         ability_dict = {}
         for ability in filtered_df["ability"].unique():
             tier_rows = filtered_df[filtered_df["ability"] == ability]
@@ -672,9 +664,6 @@ if view_mode == "Upgrade Planner":
                 }
                 for _, row in tier_rows.iterrows()
             }
-
-
-
 
         bar_cols = st.columns(len(ability_dict))
         for i, (ability, tiers) in enumerate(ability_dict.items()):
@@ -700,10 +689,10 @@ if view_mode == "Upgrade Planner":
                             )
                     else:
                         if tier_idx == cur_idx:
-                            color = TIER_COLORS.get(tier, "#171717")  # full color
+                            color = TIER_COLORS.get(tier, "#171717")  # Full Color
                         elif tier_idx < cur_idx:
                             base = TIER_COLORS.get(tier, "#171717")
-                            color = base + "33"  # 20% opacity in hex
+                            color = base + "33"  # Opacity
                         elif cur_idx < tier_idx <= upg_idx:
                             color = TIER_COLORS.get(tier, "#171717")
                             glow = (
@@ -731,9 +720,9 @@ if view_mode == "Upgrade Planner":
                         box-shadow: inset 0 0 15px 4px rgba(0, 0, 0, 0.7);
                     """
                     st.markdown(f"<div style='{style}'></div>", unsafe_allow_html=True)
-        
-    # ───────────── COLUMN 2: Ability Selectors ─────────────
+                    
 
+    # ───────────── COLUMN 2: Current & Target Tier ─────────────
 
     with col2:
         header_col1, header_col2, header_col3 = st.columns([1.4, 1.4, 1])
@@ -747,7 +736,7 @@ if view_mode == "Upgrade Planner":
             <div class="ability-column-header">Target Tier</div>
             """, unsafe_allow_html=True)
         with header_col3:
-            st.markdown("")  # placeholder
+            st.markdown("")
 
         for ability in ability_dict:
             tiers = ability_dict[ability]
@@ -759,7 +748,7 @@ if view_mode == "Upgrade Planner":
                 current_tier = st.selectbox(
                     key=f"{ability}_current",
                     label_visibility="collapsed",
-                    label="",  # No visible label at all
+                    label="",
                     options=TIER_ORDER,
                     format_func=lambda x: TIER_LABELS_WITH_EMOJIS.get(x, x)
                 )
@@ -774,7 +763,7 @@ if view_mode == "Upgrade Planner":
                 upgrade_tier = st.selectbox(
                     key=f"{ability}_upgrade",
                     label_visibility="collapsed",
-                    label="",  # Also no visible label here
+                    label="",
                     options=TIER_ORDER,
                     format_func=lambda x: TIER_LABELS_WITH_EMOJIS.get(x, x)
                 )
@@ -827,16 +816,12 @@ if view_mode == "Upgrade Planner":
         st.markdown(f"# {total_cost} / {max_sp}")
 
         if total_cost > max_sp:
-            st.error("Player SP Budget Exceeded!")
-            
+            st.error("Player SP Budget Exceeded!")   
 
-
-    # Add spacing before section
     st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+    
 
-
-# ───────────── SECTION: SP efficiency_score Comparison ─────────────
-
+# ───────────── Upgrade Efficiency Model ─────────────
 
 elif view_mode == "Upgrade Efficiency Model":
     st.markdown("""
@@ -864,9 +849,8 @@ elif view_mode == "Upgrade Efficiency Model":
         It shows which upgrades provide the best overall value, whether through high stat boosts, low cost, or a strong balance between the two.
         """, unsafe_allow_html=True)        
 
-        #Section 2
+        # Section 1
         st.markdown('<div class="gradient-text">Analysis Options</div>', unsafe_allow_html=True)
-
         st.markdown("""
         <ul>
         <li><span class="dropdown-highlight">Efficiency vs SP Cost:</span> Best upgrades per SP spent</li>
@@ -874,33 +858,25 @@ elif view_mode == "Upgrade Efficiency Model":
         <li><span class="dropdown-highlight">SP Cost vs Attribute Increase:</span> Direct cost-benefit view without scoring</li>
         </ul>
         """, unsafe_allow_html=True)
-
         st.markdown("---")
 
-        
-        #Section 1
 
+        # Section 2
         st.markdown('<div class="gradient-text">Higher Scores = Better Upgrade Value</div>', unsafe_allow_html=True)
-
         st.markdown("""
         That could mean:
         - A **big stat gain** for a reasonable cost, or
         - A **small cost** for a solid gain, especially at higher attribute levels
         """)
-    
         st.markdown("""
         The model helps you **spot hidden value** in upgrades that aren't obvious at first glance. It's based on two main factors:
         """)
-        
         st.markdown("---")
         
-
-        
-        # Section 3 — Difficulty Modifier
+        # Section 3 - Difficulty Modifier
         st.markdown("""
         The model helps you **spot hidden value** in upgrades that aren't obvious at first glance. It's based on two main factors:
         """)
-
         st.markdown('<div class="gradient-text">1. Attribute Difficulty Adjustment</div>', unsafe_allow_html=True)
         st.markdown("Not all attribute increases are equal.")
         st.markdown("""
@@ -913,20 +889,16 @@ elif view_mode == "Upgrade Efficiency Model":
         st.markdown("*Weighted Attribute Increase:* `Attribute Increase × Difficulty Adjustment`")
         st.markdown("---")
 
-        # Section 4 — Weighted Score System
+        # Section 4 - Weighted Score System
         st.markdown('<div class="gradient-text">2. Calculating Upgrade Efficiency</div>', unsafe_allow_html=True)
         st.markdown("""
         Each upgrade starts with a score of **100**, and then we subtract penalties based on:
-
         - The SP Cost of the upgrade
         - The weighted size of the attribute increase
-
         You control how much each of those factors matters using the **Weight Blending slider**:
-
         - **0.0**: Focus only on attribute increases
         - **0.5**: A balanced tradeoff between both
         - **1.0**: Focus only on SP Cost  
-        
         """)
         st.markdown("*Weight Mapping:* `SP Weight = Blend Value`, `Attribute Weight = 1 - Blend Value`")
         st.markdown("*Formula:* `Efficiency Score = 100 - (SP Weight × SP Cost + Attribute Weight × Weighted Attribute Increase)`")
@@ -941,35 +913,26 @@ elif view_mode == "Upgrade Efficiency Model":
         horizontal=True
     )
 
-
-
-
     TIER_TRANSITION_STROKES = {
-        "Bronze → Silver": {"color": "#C0C0C0", "width": 2},      # Bright silver
-        "Bronze → Gold": {"color": "#FF9900", "width": 2},        # Bright gold
-        "Bronze → Platinum": {"color": "#DA7082", "width": 2},    # Orchid purple
-        "Silver → Gold": {"color": "#F3CD22", "width": 2},        # Orange gold (distinct from bronze→gold)
-        "Silver → Platinum": {"color": "#B29FFF", "width": 2},    # Medium slate blue purple
-        "Gold → Platinum": {"color": "#8A2BE2", "width": 2},      # Blue violet purple
+        "Bronze → Silver": {"color": "#C0C0C0", "width": 2},
+        "Bronze → Gold": {"color": "#FF9900", "width": 2},
+        "Bronze → Platinum": {"color": "#DA7082", "width": 2},
+        "Silver → Gold": {"color": "#F3CD22", "width": 2},
+        "Silver → Platinum": {"color": "#B29FFF", "width": 2},
+        "Gold → Platinum": {"color": "#8A2BE2", "width": 2},
     }
-
-
-
-    # Dropdown filters
+    # Dropdown Filters
     col1, col2 = st.columns(2)
     with col1:
         pos_filter = st.multiselect("Filter by Position", sorted(df["position"].unique()))
 
-
     with col2:
-        # Add Archetype filter (after tier_jump selectbox)
         available_archs = (
             df[df["position"].isin(pos_filter)]["archetype"].unique().tolist()
             if pos_filter
             else df["archetype"].unique().tolist()
         )
         arch_filter = st.multiselect("Filter by Archetype", sorted(available_archs))
-        
 
 
     col3, col4 = st.columns(2)
@@ -980,16 +943,11 @@ elif view_mode == "Upgrade Efficiency Model":
             else df["ability"].unique().tolist()
         )
         ability_filter = st.multiselect("Filter by Ability", sorted(available_abilities))
-        
+
     with col4:
         tier_jump = st.multiselect(
             "Filter by Tier Transition",
             [
-                # "All",
-                # "None → Bronze",
-                # "None → Silver",
-                # "None → Gold",
-                # "None → Platinum",
                 "Bronze → Silver",
                 "Bronze → Gold",
                 "Bronze → Platinum",
@@ -1003,7 +961,7 @@ elif view_mode == "Upgrade Efficiency Model":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 5, 1])  # Middle column is 50% width
+    col1, col2, col3 = st.columns([1, 5, 1])
     with col2:
         st.markdown("""
         <div style='display: flex; justify-content: center;'>
@@ -1011,8 +969,7 @@ elif view_mode == "Upgrade Efficiency Model":
         </div>
         """, unsafe_allow_html=True)
 
-        
-        # Calculate percentages first (using session state to maintain values)
+        # Calculate Percentages
         if 'blend_weight' not in st.session_state:
             st.session_state.blend_weight = 0.5
         
@@ -1022,7 +979,7 @@ elif view_mode == "Upgrade Efficiency Model":
         attr_color = blend_color(attr_pct)
         sp_color = blend_color(sp_pct)
         
-        # Show percentages with reduced bottom margin
+        # Percentages
         st.markdown(
             f"""
             <div style='text-align: center; margin-bottom: 0px;'>
@@ -1033,9 +990,9 @@ elif view_mode == "Upgrade Efficiency Model":
             unsafe_allow_html=True
         )
         
-        # Then the slider (without label since we have the title above)
+        # Slider
         blend_weight = st.slider(
-            "",  # Empty label
+            "",
             min_value=0.0,
             max_value=1.0,
             step=0.05,
@@ -1062,7 +1019,7 @@ elif view_mode == "Upgrade Efficiency Model":
         tiers = {row["tier"]: row for _, row in group.iterrows()}
 
         transitions = []
-        if not tier_jump:  # If none selected, include all
+        if not tier_jump:
             for i in range(len(tier_order)):
                 for j in range(i + 1, len(tier_order)):
                     transitions.append((tier_order[i], tier_order[j]))
@@ -1093,7 +1050,7 @@ elif view_mode == "Upgrade Efficiency Model":
                     stat_changes.append(f"{start_row['stat_2_name']}: {int(start_row['stat_2_value'])} → {int(end_row['stat_2_value'])}")
 
 
-                primary_stat = "<br>".join(stat_changes)  # multi-line tooltip value
+                primary_stat = "<br>".join(stat_changes)
                 
                 
                 # Compute stat changes
@@ -1113,7 +1070,7 @@ elif view_mode == "Upgrade Efficiency Model":
                 
                 # Clamp the ratio penalty to avoid huge negatives
                 if efficiency_ratio <= 0:
-                    ratio_penalty = 50  # Tunable fixed penalty for 0 or negative gain
+                    ratio_penalty = 50
                 else:
                     ratio_penalty = 1 / efficiency_ratio
 
@@ -1152,13 +1109,12 @@ elif view_mode == "Upgrade Efficiency Model":
     eff_df["line_color"] = eff_df["tier_increase"].map(lambda x: TIER_TRANSITION_STROKES.get(x, {"color": "white"})["color"])
     eff_df["line_width"] = eff_df["tier_increase"].map(lambda x: TIER_TRANSITION_STROKES.get(x, {"width": 2})["width"])
 
-    # Archetype color map (hex codes)
-    # Use full Plotly qualitative sets + custom extension
+    # Archetype color map
     custom_palette = (
         px.colors.qualitative.Alphabet +
         px.colors.qualitative.Dark24 +
         px.colors.qualitative.Light24 +
-        px.colors.qualitative.Set3  # Add more if needed
+        px.colors.qualitative.Set3
     )
 
     ARCHETYPE_COLOR_MAP = {
@@ -1178,7 +1134,7 @@ elif view_mode == "Upgrade Efficiency Model":
 
     # ────────────────── Helper function to create plot layers ──────────────────
     def add_plot_layers(fig, x_data, y_data, eff_df):
-        # Layer 1: Outer stroke (tier transition color)
+        # Layer 1: Outer stroke - Tier Transition Color
         fig.add_trace(go.Scatter(
             x=x_data,
             y=y_data,
@@ -1194,7 +1150,7 @@ elif view_mode == "Upgrade Efficiency Model":
             showlegend=False,
         ))
 
-        # Layer 2: Middle border (black buffer)
+        # Layer 2: Middle border
         fig.add_trace(go.Scatter(
             x=x_data,
             y=y_data,
@@ -1202,15 +1158,15 @@ elif view_mode == "Upgrade Efficiency Model":
             marker=dict(
                 symbol=eff_df["symbol"],
                 size=24,
-                color="black",
-                line=dict(color="black", width=0),
+                color="#0d0d0d",
+                line=dict(color="#0d0d0d", width=0),
                 opacity=1,
             ),
             hoverinfo="skip",
             showlegend=False,
         ))
 
-        # Add tier transition legend
+        # Tier transition legend
         first = True
         for transition, style in TIER_TRANSITION_STROKES.items():
             fig.add_trace(go.Scatter(
@@ -1227,7 +1183,7 @@ elif view_mode == "Upgrade Efficiency Model":
             ))
             first = False
 
-        # Layer 3: Foreground symbols (archetype color)
+        # Layer 3: Foreground symbols - Archetype Color
         first_ability = True
         for (arch, ab), group in eff_df.groupby(["archetype", "ability"]):
             group_x = x_data[group.index]
