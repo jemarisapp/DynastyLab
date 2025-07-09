@@ -14,15 +14,15 @@ Transform your Dynasty Mode experience with data-driven upgrade decisions, inter
 - Get personalized recommendations based on your archetype and playstyle  
 - Powered by GPT-4o for contextual, strategic advice  
 
-### Efficiency Scoring Model
-- Dynamic algorithm that weighs SP cost vs. attribute gain  
-- Adjustable weighting system for personalized optimization  
-- Identifies the most efficient upgrade paths across all tiers  
-
 ### Interactive Upgrade Planner
 - Visual tier progression with real-time SP calculations  
 - Color-coded ability grids showing upgrade status  
 - Simulate upgrade sequences before spending points  
+
+### Efficiency Scoring Model
+- Dynamic algorithm that weighs SP cost vs. attribute gain  
+- Adjustable weighting system for personalized optimization  
+- Identifies the most efficient upgrade paths across all tiers  
 
 ### Multi-View Analytics
 - **Efficiency vs SP Cost:** Find the best value upgrades  
