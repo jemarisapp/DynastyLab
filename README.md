@@ -1,4 +1,4 @@
-# 🧠 DynastyLab AI 🏈  
+# 🧠 DynastyLab 🏈  
 **AI-powered upgrade optimization for EA SPORTS College Football Dynasty Mode**
 
 Transform your Dynasty Mode experience with data-driven upgrade decisions, interactive visualizations, and intelligent recommendations.
