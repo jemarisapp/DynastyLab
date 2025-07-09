@@ -25,10 +25,9 @@ Transform your Dynasty Mode experience with data-driven upgrade decisions, inter
 - Identifies the most efficient upgrade paths across all tiers  
 
 ### Multi-View Analytics
-- **Efficiency vs SP Cost:** Plot data based on Total SP Cost (Useful if SP Cost is your main concern)
-- **Efficiency vs Attribute Increase:** Plot data based on Total Attribute Increase (Useful if Attribute Increase is your main concern)
-- **SP Cost vs Attribute Increase:** Compare the Raw Value of SP Cost to Attribute Increase (No influences from Efficiency Score)
-
+- **Efficiency vs SP Cost:** Plots calculated efficiency scores against total SP cost. Ideal for optimizing budget allocations
+- **Efficiency vs Attribute Increase:** Evaluates upgrades based on attribute gain per efficiency score. Lower gains at high scores are preferred
+- **SP Cost vs Attribute Increase:** A raw scatterplot comparing cost to outcome, without efficiency weighting. Useful for baseline analysis
 ---
 
 ## How It Works
