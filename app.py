@@ -937,7 +937,7 @@ elif view_mode == "Upgrade Efficiency Model":
     # Add graph view toggle
     eff_chart_mode = st.radio(
         "Select Visualization",
-        ["Efficiency vs SP Cost", "Efficiency vs Attribute Increase", "Attribute Increase (Raw Value)"],
+        ["Efficiency vs SP Cost", "Efficiency vs Attribute Increase", "SP Cost vs Attribute Increase (Raw Value)"],
         horizontal=True
     )
 
@@ -1363,14 +1363,14 @@ elif view_mode == "Upgrade Efficiency Model":
             
             st.plotly_chart(fig, use_container_width=False, height=800)
 
-        elif eff_chart_mode == "Attribute Increase (Raw Value)":
+        elif eff_chart_mode == "SP Cost vs Attribute Increase (Raw Value)":
             fig = go.Figure()
             add_plot_layers(fig, eff_df["sp_jitter"], eff_df["attr_jitter"], eff_df)
             
             fig.update_layout(
                 height=800,
                 title={
-                    "text": "Attribute Increase (Raw Value)<br><span style='font-size:14px; color:#e0ff8a;'>Higher attribute increases for lower SP costs = better raw value</span>",
+                    "text": "SP Cost vs Attribute Increase (Raw Value)<br><span style='font-size:14px; color:#e0ff8a;'>Higher attribute increases for lower SP costs = better raw value</span>",
                     "x": 0.5,
                     "xanchor": "center",
                     "font": dict(size=18)
