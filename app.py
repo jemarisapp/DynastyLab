@@ -1280,7 +1280,7 @@ elif view_mode == "Upgrade Efficiency Model":
             fig.update_layout(
                 height=800,
                 title={
-                    "text": "Upgrade Efficiency vs Attribute Increase<br><span style='font-size:14px; color:#e0ff8a;'>Higher scores at higher attribute increases = best value upgrades</span>",
+                    "text": "Upgrade Efficiency vs Attribute Increase<br><span style='font-size:14px; color:#e0ff8a;'>Compare SP Cost to Attribute Increase</span>",
                     "x": 0.5,
                     "xanchor": "center",
                     "font": dict(size=18)
