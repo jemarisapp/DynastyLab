@@ -574,7 +574,7 @@ with st.expander("Build Smarter. Ask the AI.", expanded=True):
     # Create a form to prevent reloads
     with st.form(key='assistant_form'):
         user_input = st.text_input(
-            "Ask anything about archetypes, abilities, or upgrade strategies",
+            "Ask anything about archetypes, abilities, or upgrade strategies.",
             placeholder=EXAMPLE_QUESTION,
             key="user_question"
         )
