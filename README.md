@@ -63,7 +63,8 @@ The tool reveals several strategic insights:
 
 ---
 
-## 🚀 Getting Started
+<details>
+<summary>🔧 Developer Setup (Optional)</summary>
 
 ### Prerequisites
 - Python 3.8+
@@ -79,37 +80,9 @@ cd dynastylab-ai
 # Install dependencies
 pip install -r requirements.txt
 
-# Set up environment variables
+# Set environment variables
 cp .env.example .env
-# Add your OpenAI API key to .env
-```
-
-### Running Locally
-
-```bash
-streamlit run app.py
-# Navigate to http://localhost:8501
-```
-
----
-
-## 📁 Project Structure
-
-```
-dynastylab-ai/
-├── app.py                  # Main Streamlit application
-├── components/
-│   ├── ai_assistant.py     # GPT-4o integration
-│   ├── efficiency_model.py # Scoring algorithm
-│   ├── visualizations.py   # Plotly charts
-│   └── upgrade_planner.py  # Interactive planner
-├── data/
-│   ├── dynastylab.db       # SQLite database
-│   └── load_data.py        # Data loading utilities
-├── assets/
-│   └── screenshots/        # Interface screenshots
-├── requirements.txt
-└── README.md
+# Add your OpenAI API key to the .env file
 ```
 
 ---
