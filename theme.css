@@ -624,19 +624,4 @@
         display: none !important;
       }
     }
-
-    @media (min-width: 769px) {
-      .mobile-placeholder {
-        display: none !important;
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .mobile-placeholder {
-        color: #aaa;
-        text-align: center;
-        font-size: 0.95rem;
-        margin-top: 1rem;
-      }
-    }
     
