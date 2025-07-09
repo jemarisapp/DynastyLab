@@ -853,9 +853,9 @@ elif view_mode == "Upgrade Efficiency Model":
         st.markdown('<div class="gradient-text">Analysis Options</div>', unsafe_allow_html=True)
         st.markdown("""
         <ul>
-        <li><span class="dropdown-highlight">Efficiency vs SP Cost:</span> Best upgrades per SP spent</li>
-        <li><span class="dropdown-highlight">Efficiency vs Attribute Increase:</span> Best upgrades per stat point gained</li>
-        <li><span class="dropdown-highlight">SP Cost vs Attribute Increase:</span> Direct cost-benefit view without scoring</li>
+        <li><span class="dropdown-highlight">Efficiency vs SP Cost:</span> Best when trying to stretch your SP budget</li>
+        <li><span class="dropdown-highlight">Efficiency vs Attribute Increase:</span> Best when you want high efficiency with minimal attribute increases</li>
+        <li><span class="dropdown-highlight">SP Cost vs Attribute Increase:</span> Best for raw comparisons without scoring influence</li>
         </ul>
         """, unsafe_allow_html=True)
         st.markdown("---")
@@ -1234,7 +1234,7 @@ elif view_mode == "Upgrade Efficiency Model":
             fig.update_layout(
                 height=800,
                 title={
-                    "text": "Upgrade Efficiency vs SP Cost<br><span style='font-size:14px; color:#e0ff8a;'>Higher scores = better value for SP investment</span>",
+                    "text": "Upgrade Efficiency vs SP Cost<br><span style='font-size:14px; color:#e0ff8a;'>Best when trying to stretch your SP budget</span>",
                     "x": 0.5,
                     "xanchor": "center",
                     "font": dict(size=18)
@@ -1280,7 +1280,7 @@ elif view_mode == "Upgrade Efficiency Model":
             fig.update_layout(
                 height=800,
                 title={
-                    "text": "Upgrade Efficiency vs Attribute Increase<br><span style='font-size:14px; color:#e0ff8a;'>Higher scores = good value compared to attribute increase</span>",
+                    "text": "Upgrade Efficiency vs Attribute Increase<br><span style='font-size:14px; color:#e0ff8a;'>Best when you want high efficiency with minimal attribute increases</span>",
                     "x": 0.5,
                     "xanchor": "center",
                     "font": dict(size=18)
