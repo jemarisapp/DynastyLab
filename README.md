@@ -113,12 +113,6 @@ efficiency_score = 100 - (
 
 ---
 
-## Contact
-
-**Your Name** – your.email@example.com  
-
-[GitHub Project Link](https://github.com/yourusername/dynastylab-ai)
-
 <details>
 <summary>Developer Setup (Optional)</summary>
 
