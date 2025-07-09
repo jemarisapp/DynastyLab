@@ -34,7 +34,7 @@ Transform your Dynasty Mode experience with data-driven upgrade decisions, inter
 ## How It Works
 
 AI Assistant
-A natural language assistant powered by GPT-4o that:
+- A natural language assistant powered by GPT-4o
 - Converts user questions into targeted upgrade recommendations
 - Interprets and filters SQL data under the hood
 - Returns specific SP costs, tier logic, and attribute requirements
