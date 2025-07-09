@@ -677,6 +677,7 @@ if view_mode == "Upgrade Planner":
 
 
 
+        st.markdown("<div class='ability-bar-grid'>", unsafe_allow_html=True)
         bar_cols = st.columns(len(ability_dict))
         for i, (ability, tiers) in enumerate(ability_dict.items()):
             current = st.session_state.get(f"{ability}_current", "None")
@@ -731,7 +732,7 @@ if view_mode == "Upgrade Planner":
                         border: 2px solid rgba(255, 255, 255, 0.2);  /* Inner stroke */
                         box-shadow: inset 0 0 15px 4px rgba(0, 0, 0, 0.7);
                     """
-                    st.markdown(f"<div style='{style}'></div>", unsafe_allow_html=True)
+                    st.markdown("</div>", unsafe_allow_html=True)
 
     # ───────────── COLUMN 2: Ability Selectors ─────────────
 
