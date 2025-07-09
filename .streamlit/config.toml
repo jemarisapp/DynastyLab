@@ -1,0 +1,7 @@
+[theme]
+base = "dark"
+backgroundColor = "#111"
+secondaryBackgroundColor = "#333"
+textColor = "#f8f8f8"
+primaryColor = "#bdff00"  # Accent
+# Orange = "#F2A900"  # EA gold-orange
