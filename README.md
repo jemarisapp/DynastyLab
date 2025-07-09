@@ -63,26 +63,18 @@ The tool reveals several strategic insights:
 
 ---
 
-<details>
-<summary>🔧 Developer Setup (Optional)</summary>
-
-### Prerequisites
-- Python 3.8+
-- OpenAI API key
-
-### Installation
+## 📁 Project Structure
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/dynastylab-ai.git
-cd dynastylab-ai
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set environment variables
-cp .env.example .env
-# Add your OpenAI API key to the .env file
+dynastylab-ai/
+├── .streamlit/
+│   ├── config.toml          # Streamlit theme + settings
+│   └── secrets.toml         # API key for OpenAI
+├── app.py                   # Main Streamlit app
+├── theme.css                # Custom CSS styling
+├── bot_data_archetypes.db   # SQLite data
+├── requirements.txt         # Python dependencies
+└── README.md
 ```
 
 ---
@@ -121,53 +113,30 @@ efficiency_score = 100 - (
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit issues or enhancement requests.
-
-### Development Setup
-
-```bash
-# Create development environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\\Scripts\\activate
-
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-pytest tests/
-```
-
----
-
-## 📈 Future Enhancements
-
-- Multi-player team optimization  
-- Historical upgrade tracking  
-- League-wide analytics dashboard  
-- Mobile app version  
-- Integration with EA Sports API (if available)  
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- EA SPORTS for creating Dynasty Mode  
-- The College Football gaming community for inspiration  
-- OpenAI for GPT-4o capabilities  
-
----
-
 ## 📞 Contact
 
 **Your Name** – your.email@example.com  
+
 [GitHub Project Link](https://github.com/yourusername/dynastylab-ai)
 
-> Built with ❤️ for the Dynasty Mode community
+<details>
+<summary>🔧 Developer Setup (Optional)</summary>
+
+### Prerequisites
+- Python 3.8+
+- OpenAI API key
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/dynastylab-ai.git
+cd dynastylab-ai
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set environment variables
+cp .env.example .env
+# Add your OpenAI API key to the .env file
+```
