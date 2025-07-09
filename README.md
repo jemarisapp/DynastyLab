@@ -43,7 +43,7 @@ Transform your Dynasty Mode experience with data-driven upgrade decisions, inter
 
 ## 🛠️ Technical Stack
 
-- **Frontend:** Streamlit  
+- **Frontend:** VSCode, Python, Streamlit  
 - **Data Processing:** Pandas, NumPy  
 - **Visualization:** Plotly  
 - **Database:** SQLite  
