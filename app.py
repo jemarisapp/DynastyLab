@@ -678,6 +678,11 @@ if view_mode == "Upgrade Planner":
 
 
         st.markdown("<div class='ability-bar-grid'>", unsafe_allow_html=True)
+        st.markdown("""
+        <div class='mobile-placeholder'>
+            Ability upgrade bars are only visible on desktop for the best experience.
+        </div>
+        """, unsafe_allow_html=True)
         bar_cols = st.columns(len(ability_dict))
         for i, (ability, tiers) in enumerate(ability_dict.items()):
             current = st.session_state.get(f"{ability}_current", "None")
