@@ -6,6 +6,8 @@ from openai import OpenAI
 import plotly.express as px
 import numpy as np
 import plotly.graph_objects as go
+import math
+
 
 with open("theme.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -120,7 +122,7 @@ def calculate_efficiency_scores(df_data, blend_weight=0.5):
                         attribute_increase = (end_stat_1 + end_stat_2) - (start_stat_1 + start_stat_2)
                         
                         # Apply difficulty multiplier
-                        difficulty_multiplier = 1 + (end_max_stat / 100)
+                        difficulty_multiplier = max(1.0, math.exp((end_max_stat - 70) / 20))
                         weighted_attr_increase = attribute_increase * difficulty_multiplier
                         
                         # Calculate efficiency score
@@ -1068,7 +1070,7 @@ elif view_mode == "Upgrade Efficiency Model":
                 attribute_increase = (end_stat_1 + end_stat_2) - (start_stat_1 + start_stat_2)
                 efficiency_ratio = attribute_increase / sp_sum if sp_sum > 0 else 0
 
-                difficulty_multiplier = 1 + (end_max_stat / 100)
+                difficulty_multiplier = max(1.0, math.exp((end_max_stat - 70) / 20))
                 weighted_attr_increase = attribute_increase * difficulty_multiplier
                 
                 # Clamp the ratio penalty to avoid huge negatives
@@ -1220,7 +1222,7 @@ elif view_mode == "Upgrade Efficiency Model":
                 ),
                 showlegend=True,
                 legendgrouptitle=dict(
-                    text="Archetype · Ability",
+                    text="Archetype (Color) · Ability (Symbol)",
                     font=dict(size=16, color="white", family="Russo One")
                 ) if first_ability else None,
             ))
@@ -1413,7 +1415,8 @@ elif view_mode == "Tier Progression Visualization":
         """)
 
     # Filter controls
-    col1, col2, col3 = st.columns(3)
+# Filter controls
+    col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         pos_filter = st.multiselect("Filter by Position", sorted(df["position"].unique()))
@@ -1433,6 +1436,20 @@ elif view_mode == "Tier Progression Visualization":
             else df["ability"].unique().tolist()
         )
         ability_filter = st.multiselect("Filter by Ability", sorted(available_abilities))
+    
+    with col4:
+        tier_transition = st.selectbox(
+            "Tier Range",
+            [
+                "All Tiers (Full Progression)",
+                "Bronze → Silver",
+                "Bronze → Gold", 
+                "Bronze → Platinum",
+                "Silver → Gold",
+                "Silver → Platinum",
+                "Gold → Platinum"
+            ]
+        )
 
     # Process data for tier progression
     prog_df = df.copy()
@@ -1457,6 +1474,15 @@ elif view_mode == "Tier Progression Visualization":
             "Gold": "#FFD700",
             "Platinum": "#E5E4E2"
         }
+        
+        # Determine which tiers to show based on filter
+        if tier_transition == "All Tiers (Full Progression)":
+            display_tiers = tier_order
+        else:
+            start_tier, end_tier = [x.strip() for x in tier_transition.split("→")]
+            start_idx = tier_order.index(start_tier)
+            end_idx = tier_order.index(end_tier)
+            display_tiers = tier_order[start_idx:end_idx + 1]
         
         # Custom color palette for abilities
         custom_palette = (
@@ -1483,9 +1509,15 @@ elif view_mode == "Tier Progression Visualization":
             )
         st.markdown("<br>", unsafe_allow_html=True)
         
+        # Track if we've added the legend group title
+        first_ability_trace = True
+        
         for (pos, arch, ability), group in prog_df.groupby(["position", "archetype", "ability"]):
             # Sort by tier
             group = group.sort_values("tier", key=lambda x: [tier_order.index(t) for t in x])
+            
+            # Filter to only show the selected tier range
+            group = group[group["tier"].isin(display_tiers)]
             
             # Create base ability identifier
             ability_id = f"{arch} · {ability}"
@@ -1496,7 +1528,7 @@ elif view_mode == "Tier Progression Visualization":
                 stat_1_values = []
                 tier_labels = []
                 
-                for tier in tier_order:
+                for tier in display_tiers:
                     tier_data = group[group["tier"] == tier]
                     if not tier_data.empty and pd.notna(tier_data["stat_1_value"].iloc[0]):
                         stat_1_values.append(tier_data["stat_1_value"].iloc[0])
@@ -1524,8 +1556,14 @@ elif view_mode == "Tier Progression Visualization":
                             "Tier: %{x}<br>"
                             "Value: %{y:.0f}<br>" 
                             f"Position: {pos}<extra></extra>"
-                        )
+                        ),
+                        showlegend=True,
+                        legendgrouptitle=dict(
+                            text="Archetype · Ability (Attribute)",
+                            font=dict(size=16, color="white", family="Russo One")
+                        ) if first_ability_trace else None,
                     ))
+                    first_ability_trace = False
             
             # Process stat 2 if it exists (for multi-attribute abilities)
             if group["stat_2_name"].notna().any():
@@ -1533,7 +1571,7 @@ elif view_mode == "Tier Progression Visualization":
                 stat_2_values = []
                 tier_labels = []
                 
-                for tier in tier_order:
+                for tier in display_tiers:
                     tier_data = group[group["tier"] == tier]
                     if not tier_data.empty and pd.notna(tier_data["stat_2_value"].iloc[0]):
                         stat_2_values.append(tier_data["stat_2_value"].iloc[0])
@@ -1558,14 +1596,23 @@ elif view_mode == "Tier Progression Visualization":
                             "Tier: %{x}<br>"
                             "Value: %{y}<br>"
                             f"Position: {pos}<extra></extra>"
-                        )
+                        ),
+                        showlegend=True,
+                        legendgrouptitle=dict(
+                            text="Archetype · Ability (Attribute)",
+                            font=dict(size=16, color="white", family="Russo One")
+                        ) if first_ability_trace else None,
                     ))
+                    first_ability_trace = False
+        
+        # Dynamic title based on filter selection
+        title_text = f"Tier Progression: {tier_transition}<br><span style='font-size:14px; color:#e0ff8a;'>Solid lines = Primary stat · Dashed lines = Secondary stat</span>"
         
         # Update layout
         fig.update_layout(
             height=700,
             title={
-                "text": "Tier Progression: Attribute Requirements by Tier<br><span style='font-size:14px; color:#e0ff8a;'>Solid lines = Primary stat · Dashed lines = Secondary stat</span>",
+                "text": title_text,
                 "x": 0.5,
                 "xanchor": "center",
                 "font": dict(size=18, color="white")
@@ -1582,7 +1629,7 @@ elif view_mode == "Tier Progression Visualization":
                 mirror=True,
                 tickfont=dict(size=14, color="white"),
                 categoryorder="array",
-                categoryarray=tier_order
+                categoryarray=display_tiers  # Use filtered tiers for x-axis
             ),
             yaxis=dict(
                 title="<br>Attribute Value",
@@ -1598,10 +1645,7 @@ elif view_mode == "Tier Progression Visualization":
                     family="Inter, sans-serif",
                     size=12,
                     color="#f8f8f8"
-                ),
-                bgcolor="rgba(0,0,0,0.7)",
-                bordercolor="white",
-                borderwidth=1
+                )
             ),
             font=dict(color="white")
         )
@@ -1615,24 +1659,25 @@ elif view_mode == "Tier Progression Visualization":
             # Calculate some interesting stats
             summary_data = []
             for (pos, arch, ability), group in prog_df.groupby(["position", "archetype", "ability"]):
+                # Filter to selected tiers
+                group = group[group["tier"].isin(display_tiers)]
                 group = group.sort_values("tier", key=lambda x: [tier_order.index(t) for t in x])
-                
-                # Calculate attribute increases
+
                 if len(group) > 1:
                     first_tier = group.iloc[0]
                     last_tier = group.iloc[-1]
-                    
+
                     stat_1_increase = 0
                     stat_2_increase = 0
-                    
+
                     if pd.notna(first_tier["stat_1_value"]) and pd.notna(last_tier["stat_1_value"]):
                         stat_1_increase = last_tier["stat_1_value"] - first_tier["stat_1_value"]
-                    
+
                     if pd.notna(first_tier["stat_2_value"]) and pd.notna(last_tier["stat_2_value"]):
                         stat_2_increase = last_tier["stat_2_value"] - first_tier["stat_2_value"]
-                    
+
                     total_increase = stat_1_increase + stat_2_increase
-                    
+
                     summary_data.append({
                         "Position": pos,
                         "Archetype": arch,
@@ -1642,6 +1687,7 @@ elif view_mode == "Tier Progression Visualization":
                         "Primary Stat": f"{first_tier['stat_1_name']}: +{stat_1_increase}" if stat_1_increase > 0 else "",
                         "Secondary Stat": f"{first_tier['stat_2_name']}: +{stat_2_increase}" if stat_2_increase > 0 else ""
                     })
+
             
             if summary_data:
                 summary_df = pd.DataFrame(summary_data)
