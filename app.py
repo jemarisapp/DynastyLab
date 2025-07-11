@@ -885,12 +885,12 @@ elif view_mode == "Upgrade Efficiency Model":
         st.markdown('<div class="gradient-text">1. Attribute Difficulty Adjustment</div>', unsafe_allow_html=True)
         st.markdown("Not all attribute increases are equal.")
         st.markdown("""
-        - Upgrading an attribute from 90 to 95 is much harder (and more valuable) than upgrading from 40 to 45. 
+        - Upgrading an attribute from 90 to 95 is much harder (and more valuable) than upgrading from 70 to 75. 
         - To reflect that, we apply a **difficulty adjustment** based on the final attribute value.
-        - The higher the final attribute, the more weight the model assigns to the stat gain, making high-end upgrades appear less efficient compared to lower-tier improvements.
+        - The higher the final attribute, the more weight the model assigns to the stat increase.
         - This prevents elite upgrades from being scored the same as easier ones.
         """)
-        st.markdown("*Formula:* `Difficulty Adjustment = 1 + (Final Attribute / 100)`")
+        st.markdown("*Formula:* `Difficulty Adjustment = max(1.0, math.exp((Final Attribute - 70) / 20))`") 
         st.markdown("*Weighted Attribute Increase:* `Attribute Increase × Difficulty Adjustment`")
         st.markdown("---")
 
@@ -1559,7 +1559,7 @@ elif view_mode == "Tier Progression Visualization":
                         ),
                         showlegend=True,
                         legendgrouptitle=dict(
-                            text="Archetype · Ability (Attribute)",
+                            text="Archetype (Color) · Ability (Symbol)",
                             font=dict(size=16, color="white", family="Russo One")
                         ) if first_ability_trace else None,
                     ))
@@ -1599,16 +1599,16 @@ elif view_mode == "Tier Progression Visualization":
                         ),
                         showlegend=True,
                         legendgrouptitle=dict(
-                            text="Archetype · Ability (Attribute)",
+                            text="Archetype (Color) · Ability (Symbol)",
                             font=dict(size=16, color="white", family="Russo One")
                         ) if first_ability_trace else None,
                     ))
                     first_ability_trace = False
         
-        # Dynamic title based on filter selection
+
         title_text = f"Tier Progression: {tier_transition}<br><span style='font-size:14px; color:#e0ff8a;'>Solid lines = Primary stat · Dashed lines = Secondary stat</span>"
         
-        # Update layout
+
         fig.update_layout(
             height=700,
             title={
@@ -1629,7 +1629,7 @@ elif view_mode == "Tier Progression Visualization":
                 mirror=True,
                 tickfont=dict(size=14, color="white"),
                 categoryorder="array",
-                categoryarray=display_tiers  # Use filtered tiers for x-axis
+                categoryarray=display_tiers
             ),
             yaxis=dict(
                 title="<br>Attribute Value",
@@ -1656,10 +1656,9 @@ elif view_mode == "Tier Progression Visualization":
         if not prog_df.empty:
             st.markdown("### Progression Summary")
             
-            # Calculate some interesting stats
             summary_data = []
             for (pos, arch, ability), group in prog_df.groupby(["position", "archetype", "ability"]):
-                # Filter to selected tiers
+
                 group = group[group["tier"].isin(display_tiers)]
                 group = group.sort_values("tier", key=lambda x: [tier_order.index(t) for t in x])
 
