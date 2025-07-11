@@ -460,6 +460,8 @@ RESPONSE GUIDELINES:
 - NEVER say that an ability increases or improves a stat like SPD, ACC, or COD
 - ALWAYS say "requires" or "needs at least" when referencing attribute thresholds
 - Be clear: upgrades unlock the ability at a tier once the player has the required stats and pays the SP cost
+- Always say Skill Points instead of SP
+- Always say the Attribute Requirements before before the Skill Point Requirements
 
 
 CALCULATION RULES:
