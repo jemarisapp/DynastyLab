@@ -544,18 +544,11 @@ with st.expander("Explore Features & Get Started"):
     - Which upgrades give you the most "bang for your buck"
     - How different tier transitions compare in cost-effectiveness
     - Smart filtering by position, archetype, and ability type
-    """, unsafe_allow_html=True)
     
-    st.markdown("---")
-
-    st.markdown("""
-    <div class="gradient-text">How to Get Started</div>
-
-    1. **Ask the AI Assistant** below for personalized recommendations  
-    2. **Use the Upgrade Planner** to visualize and cost out your upgrade paths  
-    3. **Explore the Efficiency Model** to discover hidden gems and avoid SP traps
-
-    Ready to dominate the field? Let's optimize those upgrades!
+    <span class="dropdown-highlight">Visualize Tier Difficulties</span> - The Tier Progression Visualizer lets you::
+    - See how attribute requirements scale across tiers
+    - Spot steep jumps and smooth curves in progression
+    - View a summary table of total attribute increases by path
     """, unsafe_allow_html=True)
 
 
