@@ -525,7 +525,7 @@ st.markdown("""
 
 Master your College Football Dynasty Mode with AI-powered upgrade optimization, data-driven insights, and strategic planning tools.""")
 
-with st.expander("Explore Features & Get Started"):
+with st.expander("Explore Features"):
     st.markdown("""
     <div class="gradient-text">What You Can Do</div>
 
