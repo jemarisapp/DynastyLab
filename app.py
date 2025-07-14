@@ -545,7 +545,7 @@ with st.expander("Explore Features & Get Started"):
     - How different tier transitions compare in cost-effectiveness
     - Smart filtering by position, archetype, and ability type
     
-    <span class="dropdown-highlight">Visualize Tier Difficulties</span> - The Tier Progression Visualizer lets you::
+    <span class="dropdown-highlight">Visualize Tier Difficulties</span> - The Tier Progression Visualizer lets you:
     - See how attribute requirements scale across tiers
     - Spot steep jumps and smooth curves in progression
     - View a summary table of total attribute increases by path
