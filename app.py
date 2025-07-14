@@ -848,7 +848,7 @@ elif view_mode == "Upgrade Efficiency Model":
     st.markdown("### Upgrade Efficiency Model")
    
    
-    with st.expander("How the Efficiency Model Works - See why some upgrades are smarter than others"):
+    with st.expander("What is Efficiency Score?"):
         st.markdown("""
         <span class="dropdown-highlight">The Efficiency Score </span>helps you identify the smartest upgrades by balancing SP cost, attribute increase, and difficulty.
         It shows which upgrades provide the best overall value, whether through high stat boosts, low cost, or a strong balance between the two.
@@ -900,6 +900,7 @@ elif view_mode == "Upgrade Efficiency Model":
         Each upgrade starts with a score of **100**, and then we subtract penalties based on:
         - The SP Cost of the upgrade
         - The weighted size of the attribute increase
+        
         You control how much each of those factors matters using the **Weight Blending slider**:
         - **0.0**: Focus only on attribute increases
         - **0.5**: A balanced tradeoff between both
@@ -1384,37 +1385,12 @@ elif view_mode == "Tier Progression Visualization":
         color: #f8f8f8;
         margin-bottom: 1rem;
     ">
-    Visualize how attribute requirements increase across tiers for each ability upgrade path.
+    Visualize how attribute difficulty scales from Bronze to Platinum. Spot steep jumps, compare abilities, and plan smarter upgrades.
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("### Tier Progression Visualization")
-    
-    with st.expander("How Tier Progression Works - Understanding attribute curves"):
-        st.markdown("""
-        <span class="dropdown-highlight">Tier Progression </span>shows how attribute requirements scale from Bronze to Platinum.
-        This helps you understand which abilities have steep difficulty curves and plan your upgrade path accordingly.
-        """, unsafe_allow_html=True)
-        
-        st.markdown('<div class="gradient-text">What You Will See</div>', unsafe_allow_html=True)
-        st.markdown("""
-        <ul>
-        <li><span class="dropdown-highlight">Smooth curves:</span> Abilities with consistent attribute increases</li>
-        <li><span class="dropdown-highlight">Steep jumps:</span> Abilities that become much harder at higher tiers</li>
-        <li><span class="dropdown-highlight">Multiple lines:</span> Abilities like Shifty that require two different attributes</li>
-        </ul>
-        """, unsafe_allow_html=True)
-        
-        st.markdown('<div class="gradient-text">Use Cases</div>', unsafe_allow_html=True)
-        st.markdown("""
-        - **Compare difficulty curves** between similar abilities
-        - **Identify plateau points** where upgrades become expensive
-        - **Plan your build** by understanding which abilities scale smoothly vs. dramatically
-        - **Multi-attribute abilities** show both stat requirements on the same chart
-        """)
 
-    # Filter controls
 # Filter controls
     col1, col2, col3, col4 = st.columns(4)
     
