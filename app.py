@@ -37,7 +37,7 @@ def get_openai_client():
 client = get_openai_client()
 
 # Constants
-DB_PATH = "../data/databases/trilo_archetypes.db"
+DB_PATH = "bot_data_archetypes.db"
 MODEL = "gpt-4"
 
 def execute_query(sql: str) -> Tuple[List[str], List[List[Any]]]:
