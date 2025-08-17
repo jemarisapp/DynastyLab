@@ -65,7 +65,7 @@
       GRADIENT TEXT STYLES
       ============================================================================ */
    .gradient-text {
-     background: linear-gradient(to right, #dbff78, #ffffff); /* Gold to lime green */
+     background: linear-gradient(to right, #fae4a8, #ffffff); /* Trilo tertiary to white */
      -webkit-background-clip: text;
      -webkit-text-fill-color: transparent;
      background-clip: text;
@@ -78,7 +78,7 @@
    }
    
    .gradient-text-medium {
-     background: linear-gradient(to right, #dbff78, #ffffff); /* Gold to lime green */
+     background: linear-gradient(to right, #fae4a8, #ffffff); /* Trilo tertiary to white */
      -webkit-background-clip: text;
      -webkit-text-fill-color: transparent;
      background-clip: text;
@@ -91,7 +91,7 @@
    }
    
    .gradient-hero {
-     background: linear-gradient(to right, #bdff00, #ffffff); /* Gold to green */
+     background: linear-gradient(to right, #f3aa07, #ffffff); /* Trilo primary to white */
      -webkit-background-clip: text;
      -webkit-text-fill-color: transparent;
      background-clip: text;
@@ -106,7 +106,7 @@
    }
    
    .stat-number {
-     color: #bdff00; /* Bright lime green */
+     color: #f3aa07; /* Trilo primary */
      font-weight: 700;
    }
    
@@ -119,14 +119,14 @@
    .stFormSubmitButton > button,
    .stFormSubmitButton button {
      font-family: 'Russo One', sans-serif !important;
-     background-color: #bdff00 !important;
+     background-color: #f3aa07 !important;
      color: #0d0d0d !important;
      font-weight: 700 !important;
      font-size: 0.95rem !important;
      padding: 0.6rem 1.5rem !important;
      border-radius: 8px !important;
      border: none !important;
-     box-shadow: 0 0 0px #bdff00 !important; /* Green glow */
+     box-shadow: 0 0 0px #f3aa07 !important; /* Trilo primary glow */
      text-transform: none !important;
      transition: all 0.2s ease !important;
      cursor: pointer !important;
@@ -137,9 +137,9 @@
    div[data-testid="stForm"] button:hover,
    .stFormSubmitButton > button:hover,
    .stFormSubmitButton button:hover {
-     background-color: #333 !important;
-     color: #000000 !important;
-     box-shadow: 0 0 0px #333 !important; /* Stronger glow on hover */
+     background-color: #e96a01 !important;
+     color: #ffffff !important;
+     box-shadow: 0 0 0px #e96a01 !important; /* Trilo secondary glow on hover */
      transform: translateY(-1px) !important; /* Slight lift effect */
    }
    
@@ -149,9 +149,9 @@
    .stFormSubmitButton > button:active,
    .stFormSubmitButton button:active {
      transform: scale(0.97) !important;
-     background-color: #bdff00 !important;
+     background-color: #f3aa07 !important;
      color: #000000 !important;
-     box-shadow: 0 0 5px rgba(0, 179, 0, 0.0) !important; /* Reduced glow when pressed */
+     box-shadow: 0 0 5px rgba(243, 170, 7, 0.0) !important; /* Reduced Trilo primary glow when pressed */
    }
    
    /* Focus state (for accessibility) */
@@ -159,7 +159,7 @@
    div[data-testid="stForm"] button:focus,
    .stFormSubmitButton > button:focus,
    .stFormSubmitButton button:focus {
-     outline: 2px solid #bdff00 !important;
+     outline: 2px solid #f3aa07 !important;
      outline-offset: 2px !important;
    }
    
@@ -178,7 +178,7 @@
    div[data-testid="stForm"] button:hover p,
    .stFormSubmitButton > button:hover p,
    .stFormSubmitButton button:hover p {
-     color: #bdff00 !important;
+     color: #f3aa07 !important;
      margin: 0 !important;
      transition: color 0.2s ease !important;
    }
@@ -215,7 +215,7 @@
    }
    
    label[for*="Player SP"] {
-     color: #bdff00 !important;
+     color: #f3aa07 !important;
      font-weight: bold;
      text-transform: uppercase;
    }
@@ -251,12 +251,12 @@
    
    /* Chevron */
    div[data-baseweb="select"] svg {
-     fill: #e0ff8a !important;
+     fill: #fae4a8 !important;
    }
    
    /* Focus glow */
    div[data-baseweb="select"]:focus-within {
-     box-shadow: 0 0 6px 2px #bdff00 !important;
+     box-shadow: 0 0 6px 2px #f3aa07 !important;
    }
    
    /* Force visible span text */
@@ -285,7 +285,7 @@
    div[data-baseweb="popover"] {
      background-color: #000000 !important;
      color: #f8f8f8 !important;
-     border: 1px solid #bdff00 !important;
+     border: 1px solid #f3aa07 !important;
      border-radius: 8px !important;
      overflow: hidden !important;
      z-index: 9999 !important;
@@ -311,41 +311,41 @@
       SLIDERS
       ============================================================================ */
    input[type="range"] {
-     accent-color: #bdff00 !important; /* fallback */
+     accent-color: #f3aa07 !important; /* fallback */
    }
    
    /* For WebKit browsers */
    input[type="range"]::-webkit-slider-runnable-track {
      height: 6px;
-     background: linear-gradient(to right, #bdff00 0%, #555 100%) !important;
+     background: linear-gradient(to right, #f3aa07 0%, #555 100%) !important;
      border-radius: 4px;
    }
    
    input[type="range"]::-webkit-slider-thumb {
-     background-color: #bdff00 !important;
+     background-color: #f3aa07 !important;
      border: 2px solid #000;
      border-radius: 50%;
      width: 18px;
      height: 18px;
      margin-top: -6px;
      cursor: pointer;
-     box-shadow: 0 0 10px #bdff00;
+     box-shadow: 0 0 10px #f3aa07;
    }
    
    /* For Firefox */
    input[type="range"]::-moz-range-track {
      height: 6px;
-     background: linear-gradient(to right, #bdff00 0%, #555 100%) !important;
+     background: linear-gradient(to right, #f3aa07 0%, #555 100%) !important;
      border-radius: 4px;
-   }
+     }
    
    input[type="range"]::-moz-range-thumb {
-     background-color: #bdff00 !important;
+     background-color: #f3aa07 !important;
      border: 2px solid #000;
      border-radius: 50%;
      width: 18px;
      height: 18px;
-     box-shadow: 0 0 10px #bdff00;
+     box-shadow: 0 0 10px #f3aa07;
    }
    
    .stSlider > label {
@@ -411,7 +411,7 @@
      color: #f8f8f8;
      padding-bottom: 0.5rem;
      margin-bottom: 1rem;
-     border-bottom: 2px solid #bdff00;
+     border-bottom: 2px solid #f3aa07;
    }
    
    .totalsp-header {
@@ -433,7 +433,7 @@
      margin-bottom: 0.5rem;
      font-size: 1.2rem;
      font-weight: 700;
-     color: #bdff00;
+     color: #f3aa07;
    }
    
    .chat-response li {
@@ -448,7 +448,7 @@
       UTILITY CLASSES
       ============================================================================ */
     .dropdown-highlight {
-      color: #bdff00 !important;
+      color: #f3aa07 !important;
       font-weight: bold;
     }
    
@@ -479,8 +479,12 @@
       MISC OVERRIDES
       ============================================================================ */
    [data-baseweb="tag"] {
-     background-color: #111 !important;
-     color: #111 !important;
+    background: linear-gradient(#272727, #272727) padding-box, /* inner fill */
+    linear-gradient(0deg, #0d0d0d, #444) border-box; /* border gradient */
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: #f8f8f8 !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
      font-weight: 500;
    }
    
